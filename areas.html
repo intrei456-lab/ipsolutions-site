@@ -208,6 +208,108 @@ input:focus,select:focus{outline:2px solid var(--gold);outline-offset:1px;border
 .contact-grid .card h3{margin-bottom:6px}
 .contact-grid .card p,.contact-grid .card a{font-size:.92rem;color:var(--text);margin:0}
 .contact-grid .card a{color:var(--gold-deep)}
+
+/* ============================================================
+   MOTION + DEPTH LAYER — additive polish only.
+   No copy, layout order, colour or font changes to the locked sheet.
+   ============================================================ */
+:root{--lift:0 26px 60px rgba(14,16,19,.18)}
+html{scroll-behavior:smooth}
+body{background:
+  radial-gradient(1100px 520px at 82% -8%,rgba(201,169,97,.10),transparent 62%),
+  radial-gradient(760px 420px at -5% 12%,rgba(201,169,97,.07),transparent 58%),
+  var(--cream);
+  background-attachment:fixed}
+
+/* ---- frosted header that solidifies as you scroll ---- */
+.site-head{position:sticky;top:0;z-index:60;background:rgba(14,16,19,.74);
+  -webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);
+  transition:background .35s ease,box-shadow .35s ease,border-color .35s ease}
+.site-head .wrap{transition:padding .35s ease}
+.site-head img{transition:height .35s ease}
+.site-head.is-stuck{background:rgba(14,16,19,.92);border-bottom-color:rgba(201,169,97,.36);
+  box-shadow:0 18px 44px rgba(4,6,9,.45)}
+.site-head.is-stuck .wrap{padding-top:9px;padding-bottom:9px}
+.site-head.is-stuck img{height:26px}
+.head-phone{transition:color .2s ease}
+.head-phone:hover{color:var(--gold-bright)}
+
+/* ---- hero: fine grid, drifting light ---- */
+.hero{isolation:isolate;
+  background-image:
+    linear-gradient(rgba(201,169,97,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,169,97,.055) 1px,transparent 1px);
+  background-size:100% 68px,68px 100%;background-position:center top}
+.hero::before{content:"";position:absolute;inset:-25% -12% auto -12%;height:80%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(38% 52% at 22% 34%,rgba(201,169,97,.26),transparent 70%),
+    radial-gradient(30% 46% at 84% 12%,rgba(227,193,115,.20),transparent 72%);
+  filter:blur(10px);animation:ipDrift 22s ease-in-out infinite alternate}
+.page-hero{isolation:isolate;
+  background-image:
+    linear-gradient(rgba(201,169,97,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,169,97,.045) 1px,transparent 1px);
+  background-size:100% 64px,64px 100%;background-position:center top}
+.page-hero::before{content:"";position:absolute;inset:-30% -10% auto -10%;height:135%;z-index:0;pointer-events:none;
+  background:radial-gradient(34% 58% at 88% 20%,rgba(201,169,97,.22),transparent 70%);
+  animation:ipDrift 26s ease-in-out infinite alternate}
+@keyframes ipDrift{from{transform:translate3d(-1.5%,1%,0) scale(1)}to{transform:translate3d(2.5%,-2%,0) scale(1.07)}}
+
+/* ---- the thing that was missing: depth on the empty right side ---- */
+.hero-art{position:absolute;right:6%;top:50%;width:clamp(210px,23vw,320px);aspect-ratio:1;
+  transform:translateY(-50%);display:grid;place-items:center;z-index:0;pointer-events:none;color:var(--gold)}
+.hero .wrap,.page-hero .wrap{padding-right:min(34%,360px)}
+.art-glow{position:absolute;inset:6%;border-radius:50%;
+  background:radial-gradient(circle at 38% 32%,rgba(201,169,97,.32),rgba(201,169,97,.02) 68%);filter:blur(16px)}
+.art-ring{position:absolute;border-radius:50%;border:1px solid rgba(201,169,97,.34)}
+.art-ring.r1{inset:0;border-style:dashed;opacity:.5;animation:ipSpin 64s linear infinite}
+.art-ring.r2{inset:11%;border-color:rgba(201,169,97,.22);animation:ipSpin 46s linear infinite reverse}
+.art-ring.r3{inset:25%;border-color:rgba(201,169,97,.15)}
+.art-plate{position:absolute;inset:20%;border-radius:24px;
+  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.02));
+  border:1px solid rgba(201,169,97,.30);
+  box-shadow:0 30px 60px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.18);
+  transform:rotate(-8deg) rotateX(16deg) rotateY(-12deg)}
+.art-mark{position:relative;width:44%;color:var(--gold-bright);
+  filter:drop-shadow(0 10px 24px rgba(201,169,97,.38));animation:ipFloat 9s ease-in-out infinite}
+.art-mark svg{width:100%;height:auto;display:block}
+@keyframes ipSpin{to{transform:rotate(360deg)}}
+@keyframes ipFloat{0%,100%{transform:translateY(-4px)}50%{transform:translateY(6px)}}
+
+/* ---- cards: softer depth, lift, gold spotlight, gentle 3D ---- */
+.card,.offer-card{position:relative;transform-style:preserve-3d;will-change:transform;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease,border-color .35s ease}
+.card{box-shadow:0 10px 26px rgba(14,16,19,.06)}
+.card:hover,.offer-card:hover{box-shadow:var(--lift);border-color:rgba(201,169,97,.45)}
+.card::after,.offer-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(240px 180px at var(--mx,50%) var(--my,0%),rgba(201,169,97,.16),transparent 70%);
+  opacity:0;transition:opacity .3s ease}
+.card:hover::after,.offer-card:hover::after{opacity:1}
+
+/* ---- buttons: gold sheen sweep ---- */
+.btn{position:relative;overflow:hidden;box-shadow:0 12px 26px rgba(201,169,97,.18)}
+.btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);
+  transform:skewX(-18deg);transition:left .55s ease}
+.btn:hover::after{left:120%}
+
+/* ---- strip gleam ---- */
+.strip{background:linear-gradient(90deg,var(--ink-2),#1e2229,var(--ink-2))}
+
+/* ---- scroll reveal ---- */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:980px){
+  .hero-art{display:none}
+  .hero .wrap,.page-hero .wrap{padding-right:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .hero::before,.page-hero::before,.art-ring,.art-mark{animation:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.intensepropertysolutions.com/"},{"@type":"ListItem","position":2,"name":"Areas We Buy","item":"https://www.intensepropertysolutions.com/areas.html"}]}</script>
 </head>
@@ -219,7 +321,7 @@ input:focus,select:focus{outline:2px solid var(--gold);outline-offset:1px;border
     <a class="head-phone" href="sms:+14438765673?&body=Hi%2C%20I%20would%20like%20a%20cash%20offer%20for%20my%20property.%0AName%3A%20%0AProperty%20address%3A%20%0AEmail%3A%20%0APhone%3A%20"><span>Text us</span>+1 443-876-5673</a>
   </div>
 </header>
-<section class="page-hero">
+<section class="page-hero"><div class="hero-art" aria-hidden="true"><span class="art-glow"></span><span class="art-ring r1"></span><span class="art-ring r2"></span><span class="art-ring r3"></span><span class="art-plate"></span><span class="art-mark"><svg viewBox="0 0 200 200" fill="none"><g stroke="currentColor" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M40 96 L100 48 L160 96"/><path d="M56 92 V152 H144 V92"/><path d="M88 152 V118 H112 V152"/></g><g stroke="currentColor" stroke-width="1.1" opacity=".5"><path d="M40 96 L100 56 L160 96"/><path d="M56 152 H144"/><path d="M72 152 V100"/><path d="M128 152 V100"/></g></svg></span></div>
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> &rsaquo; Areas We Buy</nav>
     <h1>Areas we buy</h1>
@@ -299,5 +401,36 @@ input:focus,select:focus{outline:2px solid var(--gold);outline-offset:1px;border
     </div>
   </div>
 </footer>
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var head = document.querySelector('.site-head');
+  function stuck(){ if(head) head.classList.toggle('is-stuck', window.scrollY > 8); }
+  stuck(); window.addEventListener('scroll', stuck, {passive:true});
+  if (reduce) return;
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); setTimeout(function(){ e.target.style.transitionDelay=''; }, 1000); io.unobserve(e.target); } });
+  }, {rootMargin:'0px 0px -10% 0px', threshold:0.06}) : null;
+  if (io) {
+    var picks = document.querySelectorAll('.section .wrap > *, .strip .wrap > *, .contact-grid > *, .hero .actions, .hero .lead');
+    [].forEach.call(picks, function(el, i){
+      el.classList.add('reveal');
+      el.style.transitionDelay = (Math.min(i, 6) % 4) * 70 + 'ms';
+      io.observe(el);
+    });
+  }
+  [].forEach.call(document.querySelectorAll('.card, .offer-card'), function(card){
+    card.addEventListener('pointermove', function(ev){
+      if (ev.pointerType === 'touch') return;
+      var r = card.getBoundingClientRect();
+      var px = (ev.clientX - r.left) / r.width, py = (ev.clientY - r.top) / r.height;
+      card.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+      card.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+      card.style.transform = 'perspective(900px) rotateX(' + ((0.5 - py) * 3.5).toFixed(2) + 'deg) rotateY(' + ((px - 0.5) * 4.5).toFixed(2) + 'deg) translateY(-4px)';
+    });
+    card.addEventListener('pointerleave', function(){ card.style.transform = ''; });
+  });
+})();
+</script>
 </body>
 </html>
