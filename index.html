@@ -302,8 +302,9 @@ body{background:
 
 @media (max-width:980px){
   .hero .wrap,.page-hero .wrap{padding-right:24px}
-  /* the house mark moves above the headline on smaller screens instead of hiding */
-  .hero-art{position:relative;right:auto;top:auto;transform:none;width:clamp(104px,26vw,140px);margin:0 0 10px auto}
+  /* the house stays on the right, lower than the headline, so the headline keeps its place */
+  .hero-art{position:absolute;right:max(14px,5%);top:clamp(96px,24vw,132px);transform:none;
+    width:clamp(92px,23vw,126px);margin:0}
   .art-plate{inset:22%;border-radius:18px;transform:rotate(-8deg) rotateX(10deg) rotateY(-7deg)}
 }
 @media (prefers-reduced-motion:reduce){
